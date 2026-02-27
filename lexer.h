@@ -5,13 +5,15 @@
 using namespace std;
 
 // stores token type and actual lexeme
-struct Token {
+struct Token 
+{
     string type;
     string lexeme;
 };
 
 // reads input file and returns tokens
-class Lexer {
+class Lexer 
+{
 private:
     istream& in;   // input file stream
 
