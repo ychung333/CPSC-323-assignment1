@@ -3,7 +3,8 @@
 #include "lexer.cpp"
 using namespace std;
 
-int main() {
+int main() 
+{
 
     ifstream fin;   // file input
     ofstream fout;  // file output
@@ -16,7 +17,8 @@ int main() {
     fin.open(inputFileName);   // open file
 
     // if file name is wrong or has any issue 
-    if (!fin) {
+    if (!fin) 
+    {
         cout << "Error: Cannot open file." << endl;
         return 1;
     }
@@ -30,7 +32,8 @@ int main() {
     Token token;  // create variable for token
 
     // it read token and print them to output file until there is no more to read
-    while (true) {
+    while (true) 
+    {
         token = lexer.nextToken();
 
         if (token.type == "EOF")
