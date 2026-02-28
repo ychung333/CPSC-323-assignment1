@@ -7,8 +7,17 @@ using namespace std;
 // stores token type and actual lexeme
 struct Token 
 {
-    string type;
+    TokenType type;
     string lexeme;
+};
+
+enum struct TokenType {
+    KEYWORD,
+    IDENTIFIER,
+    REAL,
+    INTEGER,
+    OPERATOR,
+    SEPERATOR
 };
 
 // reads input file and returns tokens
