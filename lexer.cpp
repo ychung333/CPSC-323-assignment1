@@ -39,7 +39,25 @@ void Lexer::skipComment() {
 }
 
 Token Lexer::identifierFSM(){
+    string lexeme = "";
 
+    if (isalpha(currentChar)) {
+        lexeme += currentChar;
+        getChar();
+    } else {
+        return {"", ""};
+    }
+    
+    while (isalnum(currentChar) || currentChar == '_') {
+        lexeme += currentChar;
+        getChar();
+    }
+
+    if (KEYWORDS.find(lexeme) != KEYWORDS.end()) {
+        return {"keyword", lexeme};
+    }
+
+    return {"identifier", lexeme};
 }
 
 Token realFSM() {
