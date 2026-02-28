@@ -12,12 +12,52 @@ const unordered_set<string> KEYWORDS = { // using an unordered_set for quick loo
     "integer", "if", "otherwise", "fi", "while", "return", "read", "write"
 };
 
-Token identifierFSM(string& word, istream inputFile)
-{
-    enum STATE {IN_LETTER, ACCEPTED};
+Lexer::Lexer(ifstream& inputFile) : fin(inputFile) {
+    getChar(); // initialize the first character
+}
+void Lexer::getChar() {
+    currentChar = fin.get();
+}
+void Lexer::skipWhitespace() {
+    while (isspace(currentChar)) {
+        getChar();
+    }
+}
 
-    STATE this_State = IN_LETTER;
-    string lexeme = word;
+void Lexer::skipComment() {
+    if (currentChar == '/' && fin.peek() == '*') {
+        getChar();
+        getChar();
+
+        while (!(currentChar == '*' && fin.peek() == '/')) {
+            getChar();
+        }
+
+        getChar();
+        getChar();
+    }
+}
+
+Token Lexer::identifierFSM(){
+    string lexeme = "";
+
+    if (isalpha(currentChar)) {
+        lexeme += currentChar;
+        getChar();
+    } else {
+        return {"", ""};
+    }
+    
+    while (isalnum(currentChar) || currentChar == '_') {
+        lexeme += currentChar;
+        getChar();
+    }
+
+    if (KEYWORDS.find(lexeme) != KEYWORDS.end()) {
+        return {"keyword", lexeme};
+    }
+
+    return {"identifier", lexeme};
 }
 
 Token realFSM(string& word, istream inputFile)

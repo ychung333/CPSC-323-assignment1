@@ -2,6 +2,7 @@
 #define LEXER_H
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 // stores token type and actual lexeme
@@ -24,10 +25,19 @@ enum struct TokenType {
 class Lexer 
 {
 private:
-    istream& in;   // input file stream
+    ifstream &fin;
+    char currentChar;
+
+    void getChar();
+    void skipWhitespace();
+    void skipComment();
+
+    Token identifierFSM();
+    Token integerFSM();
+    Token realFSM();
 
 public:
-    Lexer(istream& input);  // constructor
+    Lexer(ifstream& inputFile);  // constructor
     Token nextToken();      // returns next token
 };
 
