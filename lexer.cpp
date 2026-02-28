@@ -12,7 +12,33 @@ const unordered_set<string> KEYWORDS = { // using an unordered_set for quick loo
     "integer", "if", "otherwise", "fi", "while", "return", "read", "write"
 };
 
-Token identifierFSM(){
+Lexer::Lexer(ifstream& inputFile) : fin(inputFile) {
+    getChar(); // initialize the first character
+}
+void Lexer::getChar() {
+    currentChar = fin.get();
+}
+void Lexer::skipWhitespace() {
+    while (isspace(currentChar)) {
+        getChar();
+    }
+}
+
+void Lexer::skipComment() {
+    if (currentChar == '/' && fin.peek() == '*') {
+        getChar();
+        getChar();
+
+        while (!(currentChar == '*' && fin.peek() == '/')) {
+            getChar();
+        }
+
+        getChar();
+        getChar();
+    }
+}
+
+Token Lexer::identifierFSM(){
 
 }
 
