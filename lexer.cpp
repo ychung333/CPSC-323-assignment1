@@ -70,8 +70,7 @@ Token Lexer::realFSM()
     while (true) {
 
         switch (state) {
-            case IN_INTEGER:                // Reused code from integerFSM. Can't reuse actua integerFSM
-
+            case IN_INTEGER:                // Reused code from integerFSM. Can't reuse actual integerFSM
                 if (isdigit(currentChar))
                 {
                     lexeme += currentChar;
@@ -91,7 +90,6 @@ Token Lexer::realFSM()
                 break;
 
             case IN_DOT :
-
                 if (isdigit(currentChar))
                 {
                     lexeme += '.';
@@ -108,9 +106,23 @@ Token Lexer::realFSM()
                 break;
 
             case IN_REAL :
-                if () {
-                    
+                if (isdigit(currentChar)) 
+                {
+                    lexeme += currentChar;
+                    getChar();
                 }
+                else
+                {
+                    state = ACCEPT_REAL;
+                }
+
+                break;
+
+            case ACCEPT_INTEGER :
+                return {"integer", lexeme};
+
+            case ACCEPT_REAL :
+                return {"real", lexeme};
         }
     }
 
@@ -137,7 +149,7 @@ Token Lexer::integerFSM()
                 break;
 
             case ACCEPT :
-                return {"INTEGER", lexeme};
+                return {"integer", lexeme};
         }  
     }
 }
