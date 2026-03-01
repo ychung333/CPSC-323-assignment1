@@ -24,8 +24,21 @@ int main()
     }
 
     // make output file and write to it
-    string outputFileName = "fout_" + inputFileName;
+    string base = inputFileName;
+    size_t pos = base.find_last_of("/\\");
+    if (pos != string::npos)
+    {
+        base = base.substr(pos + 1);
+    }
+
+    string outputFileName = "Output_" + base;
     fout.open(outputFileName);
+
+    if (!fout) 
+    {
+    cout << "Error: Cannot create output file!" << endl;
+    return 1;
+    }
 
     Lexer lexer(fin);  // create lexer
 
