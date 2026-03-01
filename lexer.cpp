@@ -60,12 +60,35 @@ Token Lexer::identifierFSM(){
     return {"identifier", lexeme};
 }
 
-Token realFSM(string& word, istream inputFile)
+Token realFSM()
 {
+
 }
 
-Token integerFSM(string& word, istream inputFile)
+Token Lexer::integerFSM()
 {
+    enum STATE { IN_INTEGER, ACCEPT };
+
+    STATE state = IN_INTEGER;
+    string lexeme = "";
+
+    while (true) {
+        switch (state) {
+
+            case IN_INTEGER :
+                if (isdigit(currentChar)) 
+                {
+                    lexeme += currentChar;
+                    getChar();
+                } else {
+                    state = ACCEPT;
+                    break;
+                }
+
+            case ACCEPT :
+                return {"INTEGER", lexeme};
+        }  
+    }
 }
 
 Token nextToken()
