@@ -62,6 +62,9 @@ Token Lexer::identifierFSM(){
 
 Token realFSM()
 {
+    enum STATE {IN_INTEGER, IN_DOT, IN_REAL, ACCEPT_INT, ACCEPT_REAL};
+
+
 
 }
 
