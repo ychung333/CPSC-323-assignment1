@@ -60,11 +60,29 @@ Token Lexer::identifierFSM(){
     return {"identifier", lexeme};
 }
 
-Token realFSM()
+Token Lexer::realFSM()
 {
     enum STATE {IN_INTEGER, IN_DOT, IN_REAL, ACCEPT_INT, ACCEPT_REAL};
+    
+    STATE state = IN_INTEGER;
+    string lexeme = "";
 
+    while (true) {
 
+        switch (state) {
+            case IN_INTEGER:                    // Reused code from integerFSM. Can't reuse actual integerFSM
+                if (isdigit(currentChar))
+                {
+                    lexeme += currentChar;
+                    getChar();
+                }
+                else if (currentChar == ".")
+                {
+                    state = IN_DOT;
+                    
+                }
+        }
+    }
 
 }
 
