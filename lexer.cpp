@@ -176,9 +176,25 @@ Token Lexer::nextToken()
     }
 
     string lexeme = "";
-    lexeme += currentChar;
 
+    if (currentChar == '<' || currentChar == '>' || currentChar == '!' || currentChar == '=') {
+        lexeme += currentChar;
+        char next = fin.peek();
+        if (next == '=') {
+            getChar();
+            lexeme += currentChar;
+        }
+        getChar();
+        return {"operator", lexeme};
+    }
+    lexeme += currentChar;
     getChar();
+
+    if (lexeme == "(" || lexeme == ")" || lexeme == ";" || lexeme == "{" || lexeme == "}"
+    || lexeme == ",") {
+        return {"separator", lexeme};
+    }
+
     return {"operator", lexeme};
 
 }
