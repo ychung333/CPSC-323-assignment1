@@ -154,11 +154,31 @@ Token Lexer::integerFSM()
     }
 }
 
-Token nextToken()
+Token Lexer::nextToken()
 {
 // This function will call the actual fsm.
 // Don't worry about checking if the first char is a letter or digit in the FSM,
 // as that will be checked in this function before calling the FSM
+    skipWhitespace();
+    skipComment();
+    skipWhitespace();
 
+    if (fin.eof()) {
+        return {"EOF", "EOF"};
+    }
+
+    if (isalpha(currentChar)) {
+        return identifierFSM();
+    }
+
+    if (isdigit(currentChar)){
+        return realFSM();
+    }
+
+    string lexeme = "";
+    lexeme += currentChar;
+
+    getChar();
+    return {"operator", lexeme};
 
 }
